@@ -335,26 +335,28 @@ class Dialogs {
             );
           } else {
             return AlertDialog(
-              elevation: 5,
-              title: title.isEmpty ? null : Center(
-                  child: Text(
-                title,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: titleTextColor ?? Colors.grey.shade800),
-              )),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: padding),
-                        child: CircularProgressIndicator(
-                    color: androidLoadingColor,
-                  ),
+                elevation: 5,
+                title: title.isEmpty
+                    ? null
+                    : Center(
+                        child: Text(
+                        title,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: titleTextColor ?? Colors.grey.shade800),
                       )),
-                ],
-              ));
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Center(
+                        child: Padding(
+                      padding: EdgeInsets.only(top: padding),
+                      child: CircularProgressIndicator(
+                        color: androidLoadingColor,
+                      ),
+                    )),
+                  ],
+                ));
           }
         });
   }

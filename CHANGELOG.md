@@ -1,3 +1,7 @@
+## 3.0.2
+
+* Formatting code to flutter format
+
 ## 3.0.1
 
 New :

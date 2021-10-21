@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 class GradientBackground extends StatelessWidget {
   /// The child of the widget
   final Widget child;
+
   /// The list of colors the [LinearGradient] should display
   final List<Color> colors;
   final List<Color> darkColors;
   final List<double> stops;
   final AlignmentGeometry begin;
   final AlignmentGeometry end;
+
   /// Whether or not the color of the gradient should change when turning the
   /// device into dark mode.
   final bool useDarkMode;
@@ -36,16 +38,17 @@ class GradientBackground extends StatelessWidget {
           child: child,
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: useDarkMode ? (MediaQuery.of(context).platformBrightness
-                    == Brightness.light ? colors : darkColors) : colors,
-                stops: stops,
-                begin: begin,
-                end: end,
-              )
-          ),
+            colors: useDarkMode
+                ? (MediaQuery.of(context).platformBrightness == Brightness.light
+                    ? colors
+                    : darkColors)
+                : colors,
+            stops: stops,
+            begin: begin,
+            end: end,
+          )),
         ),
       ),
     );
   }
 }
-

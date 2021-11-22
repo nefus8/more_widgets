@@ -14,7 +14,6 @@ class GradientBackground extends StatelessWidget {
 
   /// Whether or not the color of the gradient should change when turning the
   /// device into dark mode.
-  final bool useDarkMode;
 
   const GradientBackground({
     Key? key,
@@ -24,7 +23,6 @@ class GradientBackground extends StatelessWidget {
     this.stops = const [0.2, 0.8],
     this.begin = FractionalOffset.topLeft,
     this.end = FractionalOffset.bottomRight,
-    this.useDarkMode = true,
   }) : super(key: key);
 
   @override
@@ -38,11 +36,7 @@ class GradientBackground extends StatelessWidget {
           child: child,
           decoration: BoxDecoration(
               gradient: LinearGradient(
-            colors: useDarkMode
-                ? (MediaQuery.of(context).platformBrightness == Brightness.light
-                    ? colors
-                    : darkColors)
-                : colors,
+            colors: Theme.of(context).brightness == Brightness.light ? colors : darkColors,
             stops: stops,
             begin: begin,
             end: end,

@@ -16,13 +16,16 @@ class Dialogs {
 
     /// Button text color, default : lightBlue
     Color buttonTextColor = Colors.lightBlue,
+    Color buttonTextColorDark = Colors.lightBlueAccent,
     VoidCallback? onPressed,
 
     /// Not for iOS : default is Color(0xFF424242)
     Color titleTextColor = const Color(0xFF424242),
+    Color titleTextColorDark = Colors.white,
 
     /// Not for iOS : default is Color(0xFF424242)
     Color messageTextColor = const Color(0xFF424242),
+    Color messageTextColorDark = Colors.white,
   }) {
     showDialog(
         context: context,
@@ -38,7 +41,7 @@ class Dialogs {
                     child: Text(
                       buttonText,
                       textAlign: TextAlign.justify,
-                      style: TextStyle(color: buttonTextColor),
+                      style: TextStyle(color: MediaQuery.of(context).platformBrightness == Brightness.light ? buttonTextColor : buttonTextColorDark),
                     ),
                     onPressed: () {
                       Navigator.pop(context);
@@ -64,7 +67,7 @@ class Dialogs {
               ),
               content: Text(
                 message,
-                style: TextStyle(color: messageTextColor),
+                style: TextStyle(color: MediaQuery.of(context).platformBrightness == Brightness.light ? messageTextColor : messageTextColorDark),
               ),
               actions: [
                 TextButton(

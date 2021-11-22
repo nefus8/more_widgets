@@ -107,7 +107,7 @@ class _SignupViewState extends State<SignupView> {
                           onChanged: (value) => _password = value,
                           focusNode: _passwordFocusNode,
                           nextFocusNode: _confirmPasswordFocusNode,
-                          passwordValidatorMessage: widget.enterPasswordMessage ?? "Enter your password",
+                          pwdValidatorRequiredMsg: widget.enterPasswordMessage ?? "Enter your password",
                           key: widget.key,
                           labelText: widget.passwordLabelText,
                         ),
@@ -118,7 +118,7 @@ class _SignupViewState extends State<SignupView> {
                           key: widget.key,
                           labelText: widget.confirmPasswordLabelText ?? "Confirm password",
                           isLastFocusNode: true,
-                          passwordValidatorMessage: '',
+                          pwdValidatorRequiredMsg: '',
                         ),
                         const SizedBox(height: 15,),
                         GradientButton(

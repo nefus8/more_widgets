@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class PasswordTextFormField extends StatelessWidget {
-  final String? labelText;
-  final String passwordValidatorMessage;
+  final String? labelText, pwdValidator8CharsMsg, pwdValidatorOneNumberMsg, pwdValidatorOneLowerCharMsg, pwdValidatorOneUpperCharMsg;
+  final String pwdValidatorRequiredMsg;
   final Function onChanged;
   final Function? validator;
   final FocusNode? nextFocusNode, focusNode;
+  final bool atLeast8Chars, atLeastOneUpperChar, atLeastOneLowerChar, atLeastOneNumber;
   /// If true, will unfocus after editing completed
   final bool isLastFocusNode;
   const PasswordTextFormField({
@@ -16,7 +17,15 @@ class PasswordTextFormField extends StatelessWidget {
     this.validator,
     this.labelText,
     this.isLastFocusNode = false,
-    required this.passwordValidatorMessage,
+    this.atLeast8Chars = true,
+    this.atLeastOneLowerChar = true,
+    this.atLeastOneUpperChar = true,
+    this.atLeastOneNumber = true,
+    required this.pwdValidatorRequiredMsg,
+    this.pwdValidator8CharsMsg,
+    this.pwdValidatorOneLowerCharMsg,
+    this.pwdValidatorOneNumberMsg,
+    this.pwdValidatorOneUpperCharMsg,
   }) : super(key: key);
 
   @override
@@ -44,7 +53,15 @@ class PasswordTextFormField extends StatelessWidget {
 
   String? _passwordValidator(String value) {
     if (value.trim().isEmpty) {
-      return passwordValidatorMessage;
+      return pwdValidatorRequiredMsg;
+    } else if (atLeast8Chars && value.length < 8) {
+      return pwdValidator8CharsMsg?? "You need at least 8 chars";
+    } else if (atLeastOneNumber && !value.contains(RegExp('[0-9]'))) {
+      return pwdValidatorOneNumberMsg?? "You need a number";
+    } else if (atLeastOneLowerChar && !value.contains(RegExp('[a-z]'))) {
+      return pwdValidatorOneLowerCharMsg?? "You need a lower case char";
+    } else if (atLeastOneLowerChar && !value.contains(RegExp('[A-Z]'))) {
+      return pwdValidatorOneUpperCharMsg?? "You need an upper case char";
     }
     return null;
   }

@@ -38,7 +38,7 @@ class PhoneNumberFormField extends StatelessWidget {
   }
 
   String? phoneValidator(String s) {
-    if (s.trim().length != 0 && !(s.trim().length > 9 && s.trim().length < 15)) {
+    if (s.trim().isNotEmpty && !(s.trim().length > 9 && s.trim().length < 17)) {
       return "Phone number not valid";
     }
   }

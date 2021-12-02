@@ -22,7 +22,7 @@ final bool isLastFocusNode;
       keyboardType: TextInputType.text,
       autocorrect: true,
       focusNode: focusNode,
-      onChanged: (String value) => onChanged(value.trim().toLowerCase()),
+      onChanged: (String value) => onChanged(value.trim()),
       onEditingComplete: () => nextFocusNode != null ? nextFocusNode!.requestFocus() : isLastFocusNode ? FocusScope.of(context).unfocus() : {},
       validator: (value) => validator != null ? validator!(value) : null,
       autofillHints: const [AutofillHints.email],

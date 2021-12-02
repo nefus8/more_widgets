@@ -9,7 +9,8 @@ class GradientButton extends StatelessWidget {
   final TextStyle textStyle;
   final double radius;
 
-  GradientButton({
+  const GradientButton({
+    Key? key,
     required this.onPressed,
     required this.buttonText,
     this.colors = const [Color(0xfff44336), Color(0xffff9800)],
@@ -35,7 +36,7 @@ class GradientButton extends StatelessWidget {
                 stops: stops,
               )
           ),
-          child: Container(
+          child: SizedBox(
               height: 35,
               child: Center(child: Text(buttonText, style: textStyle,))
           )

@@ -9,13 +9,16 @@ class SignupView extends StatefulWidget {
   final List<Color> colors, darkColors;
   final List<double> stops;
   final String signupTitle, signupButtonText, backToLoginText;
-  final String? emailLabelText, passwordLabelText, confirmPasswordLabelText, emailNotValidMessage, emailRequiredMessage, enterPasswordMessage, confirmPasswordMessage;
+  final String? emailLabelText, passwordLabelText, confirmPasswordLabelText, emailNotValidMessage, emailRequiredMessage, enterPasswordMessage, passwordDontMatchErrorMessage;
   final Color signupTitleColor, backToLoginTextColor;
-  final Function? onSignup;
+  final Function onSignup;
 
   final String? signupDetailsRouteName;
   final Widget? signupDetailsView;
   final bool useRouteName;
+
+  final String? pwdValidator8CharsMsg, pwdValidatorOneLowerCharMsg, pwdValidatorOneNumberMsg, pwdValidatorOneUpperCharMsg;
+  final bool? atLeastOneUpperChar, atLeastOneNumber, atLeastOneLowerChar, atLeast8Chars;
   const SignupView({
     Key? key,
     required this.onSignup,
@@ -32,7 +35,15 @@ class SignupView extends StatefulWidget {
     this.emailRequiredMessage,
     this.emailNotValidMessage,
     this.enterPasswordMessage,
-    this.confirmPasswordMessage,
+    this.passwordDontMatchErrorMessage,
+    this.pwdValidator8CharsMsg,
+    this.pwdValidatorOneLowerCharMsg,
+    this.pwdValidatorOneNumberMsg,
+    this.pwdValidatorOneUpperCharMsg,
+    this.atLeastOneLowerChar,
+    this.atLeastOneNumber,
+    this.atLeast8Chars,
+    this.atLeastOneUpperChar,
     this.passwordLabelText,
     this.emailLabelText,
     this.confirmPasswordLabelText,
@@ -109,15 +120,27 @@ class _SignupViewState extends State<SignupView> {
                           nextFocusNode: _confirmPasswordFocusNode,
                           pwdValidatorRequiredMsg: widget.enterPasswordMessage ?? "Enter your password",
                           key: widget.key,
+                          pwdValidator8CharsMsg: widget.pwdValidator8CharsMsg,
+                          pwdValidatorOneLowerCharMsg: widget.pwdValidatorOneLowerCharMsg,
+                          pwdValidatorOneNumberMsg: widget.pwdValidatorOneNumberMsg,
+                          pwdValidatorOneUpperCharMsg: widget.pwdValidatorOneUpperCharMsg,
+                          atLeastOneUpperChar: widget.atLeastOneUpperChar??true,
+                          atLeastOneNumber: widget.atLeastOneNumber??true,
+                          atLeastOneLowerChar: widget.atLeastOneLowerChar??true,
+                          atLeast8Chars: widget.atLeast8Chars??true,
                           labelText: widget.passwordLabelText,
                         ),
                         PasswordTextFormField(
                           onChanged: (_) {},
                           focusNode: _confirmPasswordFocusNode,
-                          validator: (String value) => value != _password ? widget.confirmPasswordMessage ?? "Password doesn't match" : null,
+                          validator: (String value) => value != _password ? widget.passwordDontMatchErrorMessage ?? "Password doesn't match" : null,
                           key: widget.key,
                           labelText: widget.confirmPasswordLabelText ?? "Confirm password",
                           isLastFocusNode: true,
+                          atLeastOneUpperChar: false,
+                          atLeastOneNumber: false,
+                          atLeastOneLowerChar: false,
+                          atLeast8Chars: false,
                           pwdValidatorRequiredMsg: '',
                         ),
                         const SizedBox(height: 15,),
@@ -149,9 +172,7 @@ class _SignupViewState extends State<SignupView> {
   void onSignup() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      if (widget.onSignup != null) {
-        widget.onSignup!(_email, _password);
-      }
+      widget.onSignup(_email, _password);
       if (widget.useRouteName) {
         try {
           Navigator.pushNamed(context, widget.signupDetailsRouteName!);

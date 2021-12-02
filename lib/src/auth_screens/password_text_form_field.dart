@@ -36,7 +36,7 @@ class PasswordTextFormField extends StatelessWidget {
       autocorrect: false,
       obscureText: true,
       focusNode: focusNode,
-      onChanged: (String value) => onChanged(value.trim().toLowerCase()),
+      onChanged: (String value) => onChanged(value),
       onEditingComplete: () => nextFocusNode != null ? nextFocusNode!.requestFocus() : isLastFocusNode ? FocusScope.of(context).unfocus() : {},
       validator: (value) => validator != null ? validator!(value) : _passwordValidator(value!),
       autofillHints: const [AutofillHints.password],

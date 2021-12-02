@@ -11,7 +11,7 @@ class LoginView extends StatefulWidget {
   final String loginTitle, loginButtonText, signupButtonText, forgotPasswordText;
   final String? emailLabelText, passwordLabelText, emailNotValidMessage, emailRequiredMessage, enterPasswordMessage;
   final Color loginTitleColor, forgotPasswordTextColor;
-  final Function? onLogin;
+  final Function onLogin;
 
   final String? forgotPasswordRouteName, signupRouteName;
   final Widget? forgotPasswordView, signupView;
@@ -181,9 +181,7 @@ class _LoginViewState extends State<LoginView> {
   void onLogin() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      if (widget.onLogin != null) {
-        widget.onLogin!(_email, _password);
-      }
+      widget.onLogin(_email, _password);
     }
   }
 }

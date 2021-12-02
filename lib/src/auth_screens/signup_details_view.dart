@@ -11,10 +11,10 @@ class SignupDetailsView extends StatefulWidget {
   final AlignmentGeometry begin, end;
   final List<Color> colors, darkColors;
   final List<double> stops;
-  final String detailsTitle, confirmButtonText, backToSignupText, confidentialityUrl;
-  final String? firstNameLabelText, lastNameLabelText, nameRequiredMessage, nicknameLabel, policyNotAcceptedMessage, policyNotAcceptedTitle;
-  final Color signupTitleColor, backToLoginTextColor;
-  final Function? onConfirm;
+  final String signupDetailsTitle, confirmButtonText, backToSignupText, confidentialityUrl;
+  final String? firstNameLabelText, lastNameLabelText, phoneLabelText, nameRequiredMessage, nicknameLabelText, policyNotAcceptedMessage, policyNotAcceptedTitle;
+  final Color signupDetailsTitleColor, backToSignupTextColor;
+  final Function onConfirm;
 
   final String? confidentialityText, confidentialityButtonText;
 
@@ -29,15 +29,16 @@ class SignupDetailsView extends StatefulWidget {
     this.colors = const [Color(0xffff9800), Color(0xfff44336)],
     this.darkColors = const [Color(0xff13191f), Color(0xff262f3c)],
     this.stops = const [0.2, 0.8],
-    this.detailsTitle = "Account details",
-    this.signupTitleColor = Colors.white,
+    this.signupDetailsTitle = "Account details",
+    this.signupDetailsTitleColor = Colors.white,
     this.nameRequiredMessage,
     this.firstNameLabelText,
+    this.phoneLabelText,
     this.lastNameLabelText,
     this.confidentialityButtonText,
     this.confidentialityText,
-    this.nicknameLabel,
-    this.backToLoginTextColor = Colors.lightBlue,
+    this.nicknameLabelText,
+    this.backToSignupTextColor = Colors.lightBlue,
     this.confirmButtonText = "Confirm",
     this.backToSignupText = "Back to signup",
   }) : super(key: key);
@@ -90,7 +91,7 @@ class _SignupDetailsViewState extends State<SignupDetailsView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(widget.detailsTitle, style: Theme.of(context).textTheme.headline3!.copyWith(color: widget.signupTitleColor),),
+                FittedBox(child: Text(widget.signupDetailsTitle, style: Theme.of(context).textTheme.headline3!.copyWith(color: widget.signupDetailsTitleColor, fontSize: 35),)),
                 RoundedContainer(
                   child: Form(
                     key: _formKey,
@@ -108,7 +109,7 @@ class _SignupDetailsViewState extends State<SignupDetailsView> {
                         ),
                         CustomTextFormField(
                           onChanged: (String value) => _nickName = value.trim(),
-                          labelText: widget.nicknameLabel?? "Nickname",
+                          labelText: widget.nicknameLabelText?? "Nickname",
                           focusNode: _nickNameNode,
                           nextFocusNode: _phoneNumberNode,
                         ),
@@ -116,6 +117,7 @@ class _SignupDetailsViewState extends State<SignupDetailsView> {
                           onChanged: (String value) => _phoneNumber = value.trim(),
                           focusNode: _phoneNumberNode,
                           isLastFocusNode: true,
+                          labelText: widget.phoneLabelText,
                         ),
                         CheckboxListTile(
                           title: _getRichText(context),
@@ -134,7 +136,7 @@ class _SignupDetailsViewState extends State<SignupDetailsView> {
                         TextButton(
                           onPressed: () => Navigator.pop(context),
                           child: Text(widget.backToSignupText, style: TextStyle(
-                              color: widget.backToLoginTextColor,
+                              color: widget.backToSignupTextColor,
                               decoration: TextDecoration.underline)
                             ,
                           ),
@@ -181,10 +183,8 @@ class _SignupDetailsViewState extends State<SignupDetailsView> {
     if (_formKey.currentState!.validate()) {
       if (_hasCheckedConfidentiality) {
         _formKey.currentState!.save();
-        if (widget.onConfirm != null) {
-          /// Call back for firstName [String], lastName [String], nickName [String?], phoneNumber [String?], hasAcceptedConfidentiality
-          widget.onConfirm!(_firstName, _lastName, _nickName, _phoneNumber, _hasCheckedConfidentiality);
-        }
+        /// Call back for firstName [String], lastName [String], nickName [String?], phoneNumber [String?], hasAcceptedConfidentiality
+        widget.onConfirm(_firstName, _lastName, _nickName, _phoneNumber, _hasCheckedConfidentiality);
       } else {
         Dialogs.infoDialog(context: context,
             title: widget.policyNotAcceptedTitle?? "Warning",

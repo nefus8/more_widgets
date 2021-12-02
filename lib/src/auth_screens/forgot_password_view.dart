@@ -11,6 +11,7 @@ class ForgotPasswordView extends StatelessWidget {
   final String forgotPasswordTitle, sendButtonText, backToLoginText;
   final String? emailLabelText, emailNotValidMessage, emailRequiredMessage;
   final Color titleColor, backToLoginTextColor;
+  final Function onSendRecoveryEmail;
 
   String _email = "";
 
@@ -26,6 +27,7 @@ class ForgotPasswordView extends StatelessWidget {
     this.emailRequiredMessage,
     this.emailNotValidMessage,
     this.emailLabelText,
+    required this.onSendRecoveryEmail,
     this.backToLoginTextColor = Colors.lightBlue,
     this.sendButtonText = "Send recovery email",
     this.backToLoginText = "Back to login",
@@ -67,7 +69,7 @@ class ForgotPasswordView extends StatelessWidget {
                         ),
                         const SizedBox(height: 15,),
                         GradientButton(
-                          onPressed: () => print(sendButtonText),
+                          onPressed: () => _onSendRecoveryEmail(),
                           buttonText: sendButtonText,
                           darkColors: darkColors,
                           colors: colors,
@@ -89,5 +91,12 @@ class ForgotPasswordView extends StatelessWidget {
           ),
         )
     );
+  }
+
+  void _onSendRecoveryEmail() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      onSendRecoveryEmail(_email);
+    }
   }
 }
